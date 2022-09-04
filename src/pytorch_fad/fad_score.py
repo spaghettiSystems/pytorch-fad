@@ -42,7 +42,7 @@ import torch
 from scipy import linalg
 from torch.nn.functional import adaptive_avg_pool2d
 
-from vggish import get_vggish_model
+from .vggish import get_vggish_model
 
 try:
     from tqdm import tqdm
@@ -231,7 +231,6 @@ def calculate_activation_statistics(files, model, batch_size=50, dims=2048,
     act = get_activations(files, model, batch_size, dims, device, num_workers, recursive)
     mu = np.mean(act, axis=0)
     sigma = np.cov(act, rowvar=False)
-    print(mu)
     return mu, sigma
 
 
