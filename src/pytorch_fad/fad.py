@@ -18,21 +18,21 @@ class FADMetric:
         else:
             raise RuntimeError('Invalid path: %s' % self.base_path)
 
-    def compare_base_to_path(self, path):
+    def compare_base_to_path(self, path, recursive=True):
         m, s = compute_statistics_of_path(path, self.model,
                                           self.batch_size, self.num_workers,
-                                          self.recursive)
+                                          recursive)
         self.fad_value = calculate_frechet_distance(self.base_m, self.base_s, m, s)
 
         return self.fad_value
 
-    def compare_paths(self, path1, path2):
+    def compare_paths(self, path1, path2, recursive=True):
         m1, s1 = compute_statistics_of_path(path1, self.model,
-                                            self.batch_size, self.num_workers,
-                                            self.recursive)
+                                             self.batch_size, self.num_workers,
+                                             recursive)
         m2, s2 = compute_statistics_of_path(path2, self.model,
-                                            self.batch_size, self.num_workers,
-                                            self.recursive)
+                                             self.batch_size, self.num_workers,
+                                             recursive)
         self.fad_value = calculate_frechet_distance(m1, s1, m2, s2)
 
         return self.fad_value

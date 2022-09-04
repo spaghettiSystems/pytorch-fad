@@ -1,16 +1,27 @@
 # Fréchet Audio Distance (FAD) PyTorch Implementation
 
 This is a port of the official implementation of [Fréchet Audio Distance](https://arxiv.org/abs/1812.08466) to PyTorch. 
-See [https://github.com/google-research/google-research/tree/master/frechet_audio_distance](https://github.com/google-research/google-research/tree/master/frechet_audio_distance) for the original implementation using Tensorflow v1 and Beam.
-
-We use the VGGish port here: https://github.com/harritaylor/torchvggish
-
-Repository is based very heavily on: https://github.com/mseitzer/pytorch-fid
+See [here](https://github.com/google-research/google-research/tree/master/frechet_audio_distance) for the original implementation using Tensorflow v1 and Beam.
 
 To use, simply call fad_score.py and pass in 2 paths to folders containing the files you wish to compare. Set the recursive flag as appropriate.
 
 ```
 fid_score.py path/to/dataset path/to/generated --recursive False
+```
+
+Alternatively, instantiate FADMetric from fad.py.
+
+device: specifies what device to run the computations on, 'cuda' or 'cpu'.
+
+base_path: specifies the test set to compare against. recommended to set this to avoid repeated computations.
+
+recursive: specifies whether base_path is to be checked recursively for .wav files
+
+Example usage:
+```
+metric = FADMetric(device='cpu', base_path = "dataset/test/path")
+fad_score = metric.compare_base_to_path("generated/samples/path")
+print(fad_score)
 ```
 
 # Warning
@@ -29,4 +40,11 @@ The cause is still under investigation. Pull requests welcome. :P
 
 # Known Issues
 - The repository loads and processes audio files sequentially without batching. This should be trivial to improve, hopefully in a future version.
-- Setting the device to use for the computation (cpu/gpu) is probably broken for now
+- ~~Setting the device to use for the computation (cpu/gpu) is probably broken for now~~
+
+# Credits
+We use the VGGish port here: https://github.com/harritaylor/torchvggish
+
+Repository is based very heavily on: https://github.com/mseitzer/pytorch-fid
+
+WAV dataset class based on the one in this lovely repo: https://github.com/archinetai/audio-diffusion-pytorch
