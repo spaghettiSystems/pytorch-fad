@@ -11,14 +11,17 @@ class FADMetric:
         self.base_path = base_path
         self.recursive = recursive
 
-        if os.path.exists(self.base_path):
-            self.base_m, self.base_s = compute_statistics_of_path(self.base_path, self.model,
-                                                                  self.batch_size, self.num_workers,
-                                                                  self.recursive)
-        else:
-            raise RuntimeError('Invalid path: %s' % self.base_path)
+        if base_path is not None:
+            if os.path.exists(self.base_path):
+                self.base_m, self.base_s = compute_statistics_of_path(self.base_path, self.model,
+                                                                      self.batch_size, self.num_workers,
+                                                                      self.recursive)
+            else:
+                raise RuntimeError('Invalid path: %s' % self.base_path)
 
     def compare_base_to_path(self, path, recursive=True):
+        if self.base_path is None:
+            raise RuntimeError('Base path not set')
         m, s = compute_statistics_of_path(path, self.model,
                                           self.batch_size, self.num_workers,
                                           recursive)

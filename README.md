@@ -41,6 +41,7 @@ The cause is still under investigation. Pull requests welcome. :P
 # Known Issues
 - The repository loads and processes audio files sequentially without batching. This should be trivial to improve, hopefully in a future version.
 - ~~Setting the device to use for the computation (cpu/gpu) is probably broken for now~~
+- ~~Not pip-installable~~
 
 # Credits
 We use the VGGish port here: https://github.com/harritaylor/torchvggish
